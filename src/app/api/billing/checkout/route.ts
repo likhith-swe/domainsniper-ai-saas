@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       ok: true,
       mode: "live",
       provider,
-      url: "https://razorpay.me/@likhiths",
+      url: "https://razorpay.me/@NEXVRA",
     });
   }
 
