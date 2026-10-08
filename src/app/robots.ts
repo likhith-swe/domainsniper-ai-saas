@@ -1,0 +1,15 @@
+import type { MetadataRoute } from "next";
+import { ENV } from "@/lib/env";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/dashboard", "/watchlists", "/login"],
+      },
+    ],
+    sitemap: `${ENV.appUrl}/sitemap.xml`,
+  };
+}

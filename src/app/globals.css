@@ -1,0 +1,212 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-grotesk), "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), "JetBrains Mono", ui-monospace, "SF Mono", monospace;
+
+  --color-abyss: #070b09;
+  --color-panel: #0c1310;
+  --color-panel2: #101b15;
+  --color-line: #1b2b23;
+  --color-radar: #2ee68d;
+  --color-radar-dim: #1d9e63;
+  --color-radar-soft: #0f3a26;
+  --color-amberx: #ffb224;
+  --color-dangerx: #ff5d5d;
+  --color-fog: #8aa397;
+  --color-fog2: #5f7268;
+  --color-paper: #e7f5ec;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-abyss);
+  color: var(--color-paper);
+}
+
+::selection {
+  background: rgba(46, 230, 141, 0.28);
+  color: #eafff3;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1d3a2b transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #1d3a2b;
+  border-radius: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ------- terminal grid backdrop ------- */
+.term-grid {
+  background-image:
+    linear-gradient(rgba(46, 230, 141, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 230, 141, 0.045) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.14) 4px
+  );
+  opacity: 0.35;
+}
+
+/* ------- glow helpers ------- */
+.glow-green {
+  text-shadow: 0 0 18px rgba(46, 230, 141, 0.55);
+}
+.glow-amber {
+  text-shadow: 0 0 18px rgba(255, 178, 36, 0.5);
+}
+.card-glow {
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+}
+.card-glow:hover {
+  border-color: rgba(46, 230, 141, 0.45);
+  box-shadow: 0 0 0 1px rgba(46, 230, 141, 0.18), 0 12px 48px rgba(0, 0, 0, 0.5),
+    0 0 34px rgba(46, 230, 141, 0.09);
+  transform: translateY(-2px);
+}
+.card-glow-amber:hover {
+  border-color: rgba(255, 178, 36, 0.5);
+  box-shadow: 0 0 0 1px rgba(255, 178, 36, 0.2), 0 12px 48px rgba(0, 0, 0, 0.5),
+    0 0 34px rgba(255, 178, 36, 0.1);
+}
+
+/* ------- marquee ticker ------- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+.marquee-wrap:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ------- radar sweep ------- */
+@keyframes sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.radar-sweep {
+  animation: sweep 4.5s linear infinite;
+  background: conic-gradient(
+    from 0deg,
+    rgba(46, 230, 141, 0) 0deg,
+    rgba(46, 230, 141, 0.05) 220deg,
+    rgba(46, 230, 141, 0.5) 352deg,
+    rgba(46, 230, 141, 0.9) 360deg
+  );
+}
+
+@keyframes ping-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(46, 230, 141, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 9px rgba(46, 230, 141, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(46, 230, 141, 0);
+  }
+}
+.ping-dot {
+  animation: ping-dot 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.55;
+  }
+  94% {
+    opacity: 1;
+  }
+  97% {
+    opacity: 0.7;
+  }
+}
+.flicker {
+  animation: flicker 6s linear infinite;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.rise {
+  animation: rise 500ms ease both;
+}
+
+/* ------- range slider ------- */
+input[type="range"].ds-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2ee68d var(--fill, 40%), #1b2b23 var(--fill, 40%));
+  outline: none;
+}
+input[type="range"].ds-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #0c1310;
+  border: 2px solid #2ee68d;
+  box-shadow: 0 0 12px rgba(46, 230, 141, 0.6);
+  cursor: pointer;
+}
+input[type="range"].ds-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: #0c1310;
+  border: 2px solid #2ee68d;
+  cursor: pointer;
+}
+
+/* ------- misc ------- */
+.clip-terminal {
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
